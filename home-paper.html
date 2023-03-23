@@ -71,12 +71,9 @@
         const paperContainer = document.getElementById('paper-container');
         let json = JSON.parse(jsonText);
         let txt = "";
-
+        
         for(i=0; i<json.length; i++){
-          for(key in json[i]){ // key값 가져오기
-            txt += key + ":" + json[i][key]; 
-          }
-          txt += "<br>";
+          txt += createPaperCard(json[i]); 
         } 
         paperContainer.innerHTML = txt;
       }
