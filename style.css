@@ -29,6 +29,20 @@
   --dl-space-space-doubleunit: 16px;
   --dl-space-space-tripleunit: 24px;
 }
+::-webkit-scrollbar {
+  width: 8px;
+  /* background-color: #F5F5F5; */
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #d8d8d8;
+}
+body{
+  overflow: hidden;
+}
+
 .teleport-show {
   display: flex !important;
   transform: none !important;

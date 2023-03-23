@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>HomePaper - Landing Page</title>
+    <title>PAPER List</title>
     <meta property="og:title" content="HomePaper - Landing Page" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <meta property="twitter:card" content="summary_large_image" />
 
     <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html {scroll-behavior: smooth;}
     </style>
     <style data-tag="default-style-sheet">
       html {
@@ -25,14 +25,10 @@
         line-height: 1.55;
         color: var(--dl-color-gray-black);
         background-color: var(--dl-color-gray-white);
-
+        overflow: hidden;
       }
     </style>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
-      data-tag="font"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" data-tag="font" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
@@ -54,9 +50,10 @@
       }
     </style>
     <link rel="stylesheet" href="./style.css" />
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
-      
       let xhttp = new XMLHttpRequest();
 
       xhttp.onreadystatechange = function () {
@@ -64,7 +61,7 @@
           jsonfunc(this.responseText); //this = xhttp
         }
       }
-      xhttp.open("GET","paper_list.json", true);
+      xhttp.open("GET","./paper-list/paper_list.json", true);
       xhttp.send();
 
       function jsonfunc( jsonText ) {
@@ -73,28 +70,37 @@
         let txt = "";
         
         for(i=0; i<json.length; i++){
-          txt += createPaperCard(json[i]); 
+          paperContainer.appendChild(createPaperCard(json[i])); 
         } 
-        paperContainer.innerHTML = txt;
+        const textLimit = document.getElementById("text-limit");
+        if (!textLimit) {
+          console.error("Element with id 'text-limit' not found in the document.");
+          return;
+        }
+        const text = textLimit.innerText;
+        const maxi = 400;
+        if (text.length > maxi) {
+          textLimit.innerText = text.substring(0, maxi) + "...";
+        }
       }
 
       function createPaperCard(paper) {
           const paperCard = document.createElement('div');
           paperCard.classList.add('blog-post-card');
-
-          const paperCardHTML = `
-              <img alt="image" class="blog-post-card-image" src="/paper-list/"> <!--paper img-->
+          
+          paperCard.innerHTML = `
+              <!--img alt="image" class="blog-post-card-image" src=""-->
               <div class="blog-post-card-container">
                   <div class="post-card-category">
                       <span class="post-card-header-text">
                           ${paper.category}
                       </span>
                   </div>
-                  <h1 class="post-card-title">
+                  <h2 class="post-card-title">
                       <span>${paper.title}</span>
-                  </h1>
+                  </h2>
                   <span class="post-card-abstract">
-                      <span>${paper.abstract}</span>
+                      <span id="text-limit">${paper.abstract}</span>
                   </span>
                   <div class="post-card-profile">
                       <div class="post-card-author">
@@ -102,210 +108,237 @@
                       </div>
                   </div>
               </div>
-          `;
-
-          paperCard.innerHTML = paperCardHTML;
+          `;    
+          paperCard.querySelector(".blog-post-card-container").addEventListener("click", function(){
+            displayModal(paper);
+          });
           return paperCard;
       }
 
-      // async function loadPapers() {
-      //     const pdfList = await fetchPaperList();
-      //     const paperContainer = document.getElementById('paper-container');
+      function displayModal(paper){
+        const modal = document.createElement("div");
+        modal.classList.add("modal");
 
-      //     paperList.forEach(paper => {
-      //         const paperCard = createPaperCard(paper);
-      //         paperContainer.appendChild(paperCard);
-      //     });
-      // }
+        modal.innerHTML = `
+        <div class="modal__background"></div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">${paper.title}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <iframe class="modal-ppt-body" width="100%" height="920"></iframe>
+                <iframe class="modal-pdf-body" width="100%" height="1000"></iframe>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn close btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector("iframe.modal-ppt-body").src = "https://view.officeapps.live.com/op/embed.aspx?src=" + paper.ppturl;
+        modal.querySelector("iframe.modal-pdf-body").src = paper.pdfurl;
 
-      // 페이지 로드 시 PDF 목록을 가져오고 HTML 요소를 생성합니다.
-      // loadPapers();
+        const closeButton = modal.querySelector("button.close");
+        
+        closeButton.addEventListener("click", function() {
+            modal.remove();
+        });
 
-
+        document.querySelector(".modal__background").addEventListener("click", function() {
+            modal.remove();
+        });
+      }
     </script>
   </head>
 
 
 
   <body>
-    <div>
       <link href="./home-paper.css" rel="stylesheet" />
-
+      <div class="home-paper-header-container">
+        <header data-role="Header" class="home-paper-header">
+          <div class="home-paper-container2">
+            <a href="home-paper.html" class="home-paper-navlink">
+              <img
+                alt="logo"
+                src="public/playground_assets/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202023-03-22%20154728_preview_rev_1-1500h.png"
+                class="home-paper-image"
+              />
+            </a>
+            <div class="home-paper-nav">
+              <nav class="navigation-links1-nav playfair">
+                <span class="navigation-links1-text">
+                  <span>HOME</span>
+                </span>
+                <span class="navigation-links1-text1">
+                  <span>PAPER</span>
+                </span>
+                <span class="navigation-links1-text2">
+                  <span>MEMBER</span>
+                </span>
+              </nav>
+            </div>
+          </div>
+          <div data-role="BurgerMenu" class="home-paper-burger-menu">
+            <svg viewBox="0 0 1024 1024" class="home-paper-icon">
+              <path
+                d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
+              ></path>
+            </svg>
+          </div>
+          <div data-role="MobileMenu" class="home-paper-mobile-menu">
+            <nav class="home-paper-nav1">
+              <div class="home-paper-container3">
+                <img
+                  alt="image"
+                  src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
+                  class="home-paper-image1"
+                />
+                <div
+                  data-role="CloseMobileMenu"
+                  class="home-paper-close-mobile-menu"
+                >
+                  <svg viewBox="0 0 1024 1024" class="home-paper-icon02">
+                    <path
+                      d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <nav class="navigation-links1-nav playfair">
+                <span class="navigation-links1-text">
+                  <span>text1</span>
+                </span>
+                <span class="navigation-links1-text1">
+                  <span>text3</span>
+                </span>
+                <span class="navigation-links1-text2">
+                  <span>text3</span>
+                </span>
+              </nav>
+            </nav>
+            <div>
+              <svg
+                viewBox="0 0 950.8571428571428 1024"
+                class="home-paper-icon04"
+              >
+                <path
+                  d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
+                ></path></svg
+              ><svg
+                viewBox="0 0 877.7142857142857 1024"
+                class="home-paper-icon06"
+              >
+                <path
+                  d="M585.143 512c0-80.571-65.714-146.286-146.286-146.286s-146.286 65.714-146.286 146.286 65.714 146.286 146.286 146.286 146.286-65.714 146.286-146.286zM664 512c0 124.571-100.571 225.143-225.143 225.143s-225.143-100.571-225.143-225.143 100.571-225.143 225.143-225.143 225.143 100.571 225.143 225.143zM725.714 277.714c0 29.143-23.429 52.571-52.571 52.571s-52.571-23.429-52.571-52.571 23.429-52.571 52.571-52.571 52.571 23.429 52.571 52.571zM438.857 152c-64 0-201.143-5.143-258.857 17.714-20 8-34.857 17.714-50.286 33.143s-25.143 30.286-33.143 50.286c-22.857 57.714-17.714 194.857-17.714 258.857s-5.143 201.143 17.714 258.857c8 20 17.714 34.857 33.143 50.286s30.286 25.143 50.286 33.143c57.714 22.857 194.857 17.714 258.857 17.714s201.143 5.143 258.857-17.714c20-8 34.857-17.714 50.286-33.143s25.143-30.286 33.143-50.286c22.857-57.714 17.714-194.857 17.714-258.857s5.143-201.143-17.714-258.857c-8-20-17.714-34.857-33.143-50.286s-30.286-25.143-50.286-33.143c-57.714-22.857-194.857-17.714-258.857-17.714zM877.714 512c0 60.571 0.571 120.571-2.857 181.143-3.429 70.286-19.429 132.571-70.857 184s-113.714 67.429-184 70.857c-60.571 3.429-120.571 2.857-181.143 2.857s-120.571 0.571-181.143-2.857c-70.286-3.429-132.571-19.429-184-70.857s-67.429-113.714-70.857-184c-3.429-60.571-2.857-120.571-2.857-181.143s-0.571-120.571 2.857-181.143c3.429-70.286 19.429-132.571 70.857-184s113.714-67.429 184-70.857c60.571-3.429 120.571-2.857 181.143-2.857s120.571-0.571 181.143 2.857c70.286 3.429 132.571 19.429 184 70.857s67.429 113.714 70.857 184c3.429 60.571 2.857 120.571 2.857 181.143z"
+                ></path></svg
+              ><svg
+                viewBox="0 0 602.2582857142856 1024"
+                class="home-paper-icon08"
+              >
+                <path
+                  d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </header>
+        <header data-role="Header" class="home-paper-header1">
+          <div class="home-paper-nav2">
+            <nav class="home-paper-nav3">
+              <a href="index.html" class="home-paper-navlink1 nav-text">
+                Main
+              </a>
+              <span class="home-paper-text nav-text nav-selected">
+                Paper List
+              </span>
+              <span class="home-paper-text1 nav-text">How to use</span>
+              <span class="home-paper-text2 nav-text">Team</span>
+              <span class="home-paper-text3 nav-text">Blog</span>
+            </nav>
+          </div>
+          <div data-role="BurgerMenu" class="home-paper-burger-menu1">
+            <svg viewBox="0 0 1024 1024" class="home-paper-icon10">
+              <path
+                d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
+              ></path>
+            </svg>
+          </div>
+          <div data-role="MobileMenu" class="home-paper-mobile-menu1">
+            <div class="home-paper-nav4">
+              <div class="home-paper-container4">
+                <img
+                  alt="image"
+                  src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
+                  class="home-paper-image2"
+                />
+                <div
+                  data-role="CloseMobileMenu"
+                  class="home-paper-menu-close"
+                >
+                  <svg viewBox="0 0 1024 1024" class="home-paper-icon12">
+                    <path
+                      d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <nav
+                class="navigation-links2-nav navigation-links2-root-class-name8"
+              >
+                <span class="nav-text"><span>About</span></span>
+                <span class="navigation-links2-text1 nav-text">
+                  <span>Features</span>
+                </span>
+                <span class="navigation-links2-text2 nav-text">
+                  <span>Pricing</span>
+                </span>
+                <span class="navigation-links2-text3 nav-text">
+                  <span>Team</span>
+                </span>
+                <span class="navigation-links2-text4 nav-text">
+                  <span>Blog</span>
+                </span>
+              </nav>
+            </div>
+            <div>
+              <svg
+                viewBox="0 0 950.8571428571428 1024"
+                class="home-paper-icon14"
+              >
+                <path
+                  d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
+                ></path></svg
+              ><svg
+                viewBox="0 0 877.7142857142857 1024"
+                class="home-paper-icon16"
+              >
+                <path
+                  d="M585.143 512c0-80.571-65.714-146.286-146.286-146.286s-146.286 65.714-146.286 146.286 65.714 146.286 146.286 146.286 146.286-65.714 146.286-146.286zM664 512c0 124.571-100.571 225.143-225.143 225.143s-225.143-100.571-225.143-225.143 100.571-225.143 225.143-225.143 225.143 100.571 225.143 225.143zM725.714 277.714c0 29.143-23.429 52.571-52.571 52.571s-52.571-23.429-52.571-52.571 23.429-52.571 52.571-52.571 52.571 23.429 52.571 52.571zM438.857 152c-64 0-201.143-5.143-258.857 17.714-20 8-34.857 17.714-50.286 33.143s-25.143 30.286-33.143 50.286c-22.857 57.714-17.714 194.857-17.714 258.857s-5.143 201.143 17.714 258.857c8 20 17.714 34.857 33.143 50.286s30.286 25.143 50.286 33.143c57.714 22.857 194.857 17.714 258.857 17.714s201.143 5.143 258.857-17.714c20-8 34.857-17.714 50.286-33.143s25.143-30.286 33.143-50.286c22.857-57.714 17.714-194.857 17.714-258.857s5.143-201.143-17.714-258.857c-8-20-17.714-34.857-33.143-50.286s-30.286-25.143-50.286-33.143c-57.714-22.857-194.857-17.714-258.857-17.714zM877.714 512c0 60.571 0.571 120.571-2.857 181.143-3.429 70.286-19.429 132.571-70.857 184s-113.714 67.429-184 70.857c-60.571 3.429-120.571 2.857-181.143 2.857s-120.571 0.571-181.143-2.857c-70.286-3.429-132.571-19.429-184-70.857s-67.429-113.714-70.857-184c-3.429-60.571-2.857-120.571-2.857-181.143s-0.571-120.571 2.857-181.143c3.429-70.286 19.429-132.571 70.857-184s113.714-67.429 184-70.857c60.571-3.429 120.571-2.857 181.143-2.857s120.571-0.571 181.143 2.857c70.286 3.429 132.571 19.429 184 70.857s67.429 113.714 70.857 184c3.429 60.571 2.857 120.571 2.857 181.143z"
+                ></path></svg
+              ><svg
+                viewBox="0 0 602.2582857142856 1024"
+                class="home-paper-icon18"
+              >
+                <path
+                  d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </header>
+      </div>
       <div class="home-paper-container">
         <div class="home-paper-body-container">
-          <div class="home-paper-container1">
-            <header data-role="Header" class="home-paper-header">
-              <div class="home-paper-container2">
-                <a href="home-paper.html" class="home-paper-navlink">
-                  <img
-                    alt="logo"
-                    src="public/playground_assets/%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B2%98%202023-03-22%20154728_preview_rev_1-1500h.png"
-                    class="home-paper-image"
-                  />
-                </a>
-                <div class="home-paper-nav">
-                  <nav class="navigation-links1-nav playfair">
-                    <span class="navigation-links1-text">
-                      <span>HOME</span>
-                    </span>
-                    <span class="navigation-links1-text1">
-                      <span>PAPER</span>
-                    </span>
-                    <span class="navigation-links1-text2">
-                      <span>MEMBER</span>
-                    </span>
-                  </nav>
-                </div>
-              </div>
-              <div data-role="BurgerMenu" class="home-paper-burger-menu">
-                <svg viewBox="0 0 1024 1024" class="home-paper-icon">
-                  <path
-                    d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
-                  ></path>
-                </svg>
-              </div>
-              <div data-role="MobileMenu" class="home-paper-mobile-menu">
-                <nav class="home-paper-nav1">
-                  <div class="home-paper-container3">
-                    <img
-                      alt="image"
-                      src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
-                      class="home-paper-image1"
-                    />
-                    <div
-                      data-role="CloseMobileMenu"
-                      class="home-paper-close-mobile-menu"
-                    >
-                      <svg viewBox="0 0 1024 1024" class="home-paper-icon02">
-                        <path
-                          d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <nav class="navigation-links1-nav playfair">
-                    <span class="navigation-links1-text">
-                      <span>text1</span>
-                    </span>
-                    <span class="navigation-links1-text1">
-                      <span>text3</span>
-                    </span>
-                    <span class="navigation-links1-text2">
-                      <span>text3</span>
-                    </span>
-                  </nav>
-                </nav>
-                <div>
-                  <svg
-                    viewBox="0 0 950.8571428571428 1024"
-                    class="home-paper-icon04"
-                  >
-                    <path
-                      d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
-                    ></path></svg
-                  ><svg
-                    viewBox="0 0 877.7142857142857 1024"
-                    class="home-paper-icon06"
-                  >
-                    <path
-                      d="M585.143 512c0-80.571-65.714-146.286-146.286-146.286s-146.286 65.714-146.286 146.286 65.714 146.286 146.286 146.286 146.286-65.714 146.286-146.286zM664 512c0 124.571-100.571 225.143-225.143 225.143s-225.143-100.571-225.143-225.143 100.571-225.143 225.143-225.143 225.143 100.571 225.143 225.143zM725.714 277.714c0 29.143-23.429 52.571-52.571 52.571s-52.571-23.429-52.571-52.571 23.429-52.571 52.571-52.571 52.571 23.429 52.571 52.571zM438.857 152c-64 0-201.143-5.143-258.857 17.714-20 8-34.857 17.714-50.286 33.143s-25.143 30.286-33.143 50.286c-22.857 57.714-17.714 194.857-17.714 258.857s-5.143 201.143 17.714 258.857c8 20 17.714 34.857 33.143 50.286s30.286 25.143 50.286 33.143c57.714 22.857 194.857 17.714 258.857 17.714s201.143 5.143 258.857-17.714c20-8 34.857-17.714 50.286-33.143s25.143-30.286 33.143-50.286c22.857-57.714 17.714-194.857 17.714-258.857s5.143-201.143-17.714-258.857c-8-20-17.714-34.857-33.143-50.286s-30.286-25.143-50.286-33.143c-57.714-22.857-194.857-17.714-258.857-17.714zM877.714 512c0 60.571 0.571 120.571-2.857 181.143-3.429 70.286-19.429 132.571-70.857 184s-113.714 67.429-184 70.857c-60.571 3.429-120.571 2.857-181.143 2.857s-120.571 0.571-181.143-2.857c-70.286-3.429-132.571-19.429-184-70.857s-67.429-113.714-70.857-184c-3.429-60.571-2.857-120.571-2.857-181.143s-0.571-120.571 2.857-181.143c3.429-70.286 19.429-132.571 70.857-184s113.714-67.429 184-70.857c60.571-3.429 120.571-2.857 181.143-2.857s120.571-0.571 181.143 2.857c70.286 3.429 132.571 19.429 184 70.857s67.429 113.714 70.857 184c3.429 60.571 2.857 120.571 2.857 181.143z"
-                    ></path></svg
-                  ><svg
-                    viewBox="0 0 602.2582857142856 1024"
-                    class="home-paper-icon08"
-                  >
-                    <path
-                      d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </header>
-            <header data-role="Header" class="home-paper-header1">
-              <div class="home-paper-nav2">
-                <nav class="home-paper-nav3">
-                  <a href="index.html" class="home-paper-navlink1 nav-text">
-                    Main
-                  </a>
-                  <span class="home-paper-text nav-text nav-selected">
-                    Paper List
-                  </span>
-                  <span class="home-paper-text1 nav-text">Pricing</span>
-                  <span class="home-paper-text2 nav-text">Team</span>
-                  <span class="home-paper-text3 nav-text">Blog</span>
-                </nav>
-              </div>
-              <div data-role="BurgerMenu" class="home-paper-burger-menu1">
-                <svg viewBox="0 0 1024 1024" class="home-paper-icon10">
-                  <path
-                    d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
-                  ></path>
-                </svg>
-              </div>
-              <div data-role="MobileMenu" class="home-paper-mobile-menu1">
-                <div class="home-paper-nav4">
-                  <div class="home-paper-container4">
-                    <img
-                      alt="image"
-                      src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
-                      class="home-paper-image2"
-                    />
-                    <div
-                      data-role="CloseMobileMenu"
-                      class="home-paper-menu-close"
-                    >
-                      <svg viewBox="0 0 1024 1024" class="home-paper-icon12">
-                        <path
-                          d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <nav
-                    class="navigation-links2-nav navigation-links2-root-class-name8"
-                  >
-                    <span class="nav-text"><span>About</span></span>
-                    <span class="navigation-links2-text1 nav-text">
-                      <span>Features</span>
-                    </span>
-                    <span class="navigation-links2-text2 nav-text">
-                      <span>Pricing</span>
-                    </span>
-                    <span class="navigation-links2-text3 nav-text">
-                      <span>Team</span>
-                    </span>
-                    <span class="navigation-links2-text4 nav-text">
-                      <span>Blog</span>
-                    </span>
-                  </nav>
-                </div>
-                <div>
-                  <svg
-                    viewBox="0 0 950.8571428571428 1024"
-                    class="home-paper-icon14"
-                  >
-                    <path
-                      d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
-                    ></path></svg
-                  ><svg
-                    viewBox="0 0 877.7142857142857 1024"
-                    class="home-paper-icon16"
-                  >
-                    <path
-                      d="M585.143 512c0-80.571-65.714-146.286-146.286-146.286s-146.286 65.714-146.286 146.286 65.714 146.286 146.286 146.286 146.286-65.714 146.286-146.286zM664 512c0 124.571-100.571 225.143-225.143 225.143s-225.143-100.571-225.143-225.143 100.571-225.143 225.143-225.143 225.143 100.571 225.143 225.143zM725.714 277.714c0 29.143-23.429 52.571-52.571 52.571s-52.571-23.429-52.571-52.571 23.429-52.571 52.571-52.571 52.571 23.429 52.571 52.571zM438.857 152c-64 0-201.143-5.143-258.857 17.714-20 8-34.857 17.714-50.286 33.143s-25.143 30.286-33.143 50.286c-22.857 57.714-17.714 194.857-17.714 258.857s-5.143 201.143 17.714 258.857c8 20 17.714 34.857 33.143 50.286s30.286 25.143 50.286 33.143c57.714 22.857 194.857 17.714 258.857 17.714s201.143 5.143 258.857-17.714c20-8 34.857-17.714 50.286-33.143s25.143-30.286 33.143-50.286c22.857-57.714 17.714-194.857 17.714-258.857s5.143-201.143-17.714-258.857c-8-20-17.714-34.857-33.143-50.286s-30.286-25.143-50.286-33.143c-57.714-22.857-194.857-17.714-258.857-17.714zM877.714 512c0 60.571 0.571 120.571-2.857 181.143-3.429 70.286-19.429 132.571-70.857 184s-113.714 67.429-184 70.857c-60.571 3.429-120.571 2.857-181.143 2.857s-120.571 0.571-181.143-2.857c-70.286-3.429-132.571-19.429-184-70.857s-67.429-113.714-70.857-184c-3.429-60.571-2.857-120.571-2.857-181.143s-0.571-120.571 2.857-181.143c3.429-70.286 19.429-132.571 70.857-184s113.714-67.429 184-70.857c60.571-3.429 120.571-2.857 181.143-2.857s120.571-0.571 181.143 2.857c70.286 3.429 132.571 19.429 184 70.857s67.429 113.714 70.857 184c3.429 60.571 2.857 120.571 2.857 181.143z"
-                    ></path></svg
-                  ><svg
-                    viewBox="0 0 602.2582857142856 1024"
-                    class="home-paper-icon18"
-                  >
-                    <path
-                      d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </header>
-          </div>
+          
           <div class="home-paper-testimonial">
             <div class="home-paper-container5">
               <span class="home-paper-text4">Paper List</span>
@@ -320,7 +353,6 @@
         </div>
         <div class="home-paper-section-separator"></div>
       </div>
-    </div>
-    <script src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script>
+    <!-- <script src="https://unpkg.com/@teleporthq/teleport-custom-scripts"></script> -->
   </body>
 </html>
