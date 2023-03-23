@@ -1,0 +1,38 @@
+.navigation-links1-nav {
+  flex: 0 0 auto;
+  color: #fff;
+  display: flex;
+  font-style: normal;
+  align-items: center;
+  line-height: 1.55;
+  flex-direction: row;
+}
+.navigation-links1-text1 {
+  margin-left: 32px;
+}
+.navigation-links1-text2 {
+  margin-left: 32px;
+}
+
+
+
+
+
+
+
+
+
+
+@media(max-width: 767px) {
+  .navigation-links1-text {
+    margin-bottom: var(--dl-space-space-unit);
+  }
+  .navigation-links1-text1 {
+    margin-left: 0;
+    margin-bottom: var(--dl-space-space-unit);
+  }
+  .navigation-links1-text2 {
+    margin-left: 0;
+    margin-bottom: var(--dl-space-space-unit);
+  }
+}
