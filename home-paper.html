@@ -131,7 +131,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <iframe class="modal-ppt-body" width="100%" height="920"></iframe>
+                <iframe class="modal-ppt-body" width="100%" height="1000"></iframe>
                 <iframe class="modal-pdf-body" width="100%" height="1000"></iframe>
               </div>
               <div class="modal-footer">
@@ -143,7 +143,7 @@
         </div>
         `;
         document.body.appendChild(modal);
-        modal.querySelector("iframe.modal-ppt-body").src = "https://view.officeapps.live.com/op/embed.aspx?src=" + paper.ppturl;
+        modal.querySelector("iframe.modal-ppt-body").src = paper.ppturl;
         modal.querySelector("iframe.modal-pdf-body").src = paper.pdfurl;
 
         const closeButton = modal.querySelector("button.close");
@@ -260,7 +260,7 @@
               <span class="home-paper-text nav-text nav-selected">
                 Paper List
               </span>
-              <span class="home-paper-text1 nav-text">How to use</span>
+              <span class="home-paper-text1 nav-text">Guide</span>
               <span class="home-paper-text2 nav-text">Team</span>
               <span class="home-paper-text3 nav-text">Blog</span>
             </nav>

@@ -1,6 +1,6 @@
 [
     {
-        "ppturl": "./paper-list/MA_LAB_03_LED Toggle.pptx",
+        "ppturl": "./paper-list/MA_LAB_03_LED Toggle.pdf",
         "pdfurl": "./paper-list/2022_kor_3D Object Detection via Object structural and Dynamic feature extraction of LiDAR Point-Cloud.pdf",
         "image":"./",
         "category": "3D Object Detection",
@@ -9,7 +9,7 @@
         "author": "박기완"
     },
     {
-        "ppturl": "./paper-list/",
+        "ppturl": "./paper-list/MA_LAB_03_LED Toggle.pdf",
         "pdfurl": "./paper-list/2023_kor_3D Object Detection and Tracking for a Robot Platform Using DBSCAN.pdf",
         "image":"./",
         "category": "3D Object Detection",

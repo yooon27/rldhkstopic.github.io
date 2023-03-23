@@ -337,7 +337,7 @@
 .home-about-cards-container {
   width: 100%;
   display: flex;
-  margin-top: var(--dl-space-space-tenunits);
+  margin-top: 20px;
   align-items: flex-start;
   flex-direction: row;
   justify-content: space-between;
@@ -352,6 +352,7 @@
   margin-right: var(--dl-space-space-fourunits);
   border-radius: var(--dl-radius-radius-radius8);
   flex-direction: column;
+  max-height: 900px;
 }
 .home-about-video-container {
   width: 100%;
@@ -365,6 +366,7 @@
   background-color: var(--dl-color-gray-900);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  overflow: hidden;
 }
 .home-about-video {
   width: 100%;
@@ -404,6 +406,9 @@
   flex-direction: column;
   padding-bottom: var(--dl-space-space-tripleunit);
   justify-content: flex-start;
+  margin-top: -290px;
+  z-index: 99;
+  background: #fff;
 }
 .home-about-heading {
   font-style: normal;
@@ -425,6 +430,7 @@
   line-height: 1.55;
   text-transform: capitalize;
   text-decoration: none;
+  margin-bottom: 20px;
 }
 .home-about-info-container {
   width: 100%;

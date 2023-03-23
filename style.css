@@ -29,6 +29,12 @@
   --dl-space-space-doubleunit: 16px;
   --dl-space-space-tripleunit: 24px;
 }
+.body-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
 ::-webkit-scrollbar {
   width: 8px;
   /* background-color: #F5F5F5; */
