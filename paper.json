@@ -26,13 +26,13 @@
   {
     "title": "Attention Is All You Need",
     "date": "2023-04-02",
-    "field": "Natural Language Processing",
+    "field": "NLP",
     "writer": "Sanghyun",
     "rawurl": "./papers/Attention Is All You Need.pdf",
     "preurl": "./ppts/example.pdf"
   },
   {
-    "title": "paper title 4",
+    "title": "Object Detection in 20 Years_A Survey",
     "date": "2023-04-02",
     "field": "Object detection",
     "writer": "Yoonsung",
