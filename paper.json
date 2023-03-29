@@ -9,34 +9,34 @@
   },  
   {
     "title": "3D Object Detection for Autonomous Driving: A Review and New Outlooks",
-    "date": "2023-03-29",
+    "date": "2023-04-02",
     "field": "Computer Vision",
     "writer": "kiwan",
     "rawurl": "./papers/raw_3ds.pdf",
     "preurl": "./papers/pre_3ds.pdf"
   },
   {
-    "title": "paper title 2",
-    "date": "2023-03-01",
-    "field": "object detection",
-    "writer": "jane",
-    "rawurl": "./papers/raw_3ds.pdf",
+    "title": "IMAGENET-TRAINED CNNS ARE BIASED TOWARDS TEXTURE; INCREASING SHAPE BIAS IMPROVES ACCURACY AND ROBUSTNESS",
+    "date": "2023-04-02",
+    "field": "Computer Vision",
+    "writer": "Minchang",
+    "rawurl": "./papers/566_imagenet_trained_cnns_are_bias.pdf",
     "preurl": "./papers/pre_3ds.pdf"
   },
   {
-    "title": "paper title 3",
-    "date": "2023-04-20",
-    "field": "machine learning",
-    "writer": "john",
-    "rawurl": "./papers/raw_3ds.pdf",
+    "title": "Attention Is All You Need",
+    "date": "2023-04-02",
+    "field": "Natural Language Processing",
+    "writer": "Sanghyun",
+    "rawurl": "./papers/Attention Is All You Need.pdf",
     "preurl": "./papers/pre_3ds.pdf"
   },
   {
     "title": "paper title 4",
-    "date": "2023-05-10",
-    "field": "Computer Vision",
-    "writer": "bob",
-    "rawurl": "./papers/raw_3ds.pdf",
+    "date": "2023-04-02",
+    "field": "Object detection",
+    "writer": "Yoonsung",
+    "rawurl": "./papers/Object Detection in 20 Years_A Survey.pdf",
     "preurl": "./papers/pre_3ds.pdf"
   }
 ]
