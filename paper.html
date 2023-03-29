@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Paper - Agency modern template</title>
+    <meta property="og:title" content="Paper - Agency modern template" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Noto Sans;
+        font-size: 16px;
+        overflow: hidden;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-gray-black);
+        background-color: var(--dl-color-gray-white);
+        transition: color 0.5s ease;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <!--This is the head section-->
+    <!-- <style> ... </style> -->
+    <link rel="stylesheet" href="./style/style.css" />
+    <script>
+        
+        const paperJSONPath = '../paper.json';
+
+        // paper.json 파일 정보를 읽어오는 함수
+        function loadPaperJSON(callback) {
+          fetch(paperJSONPath)
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error(error));
+        }
+        
+        function createPaperOptions(paperData) {
+          // const paperOptions = document.querySelector('.paper-options');
+          const headers = document.querySelectorAll('.side-item-header');
+          
+          // 필드명이 일치하는 데이터를 찾아 HTML 요소를 생성
+          headers.forEach(header => {
+            const field = header.textContent; // 비교할 필드값
+            const paperOptions = header.nextElementSibling;
+            paperData.forEach(paper => {
+              if (paper.field.toLowerCase().replace(/\s/g, '') === field.toLowerCase().replace(/\s/g, '')) {
+                const title = paper.title//paper.title.length > 20 ? `${paper.title.substr(0, 20)}...` : paper.title;
+                const paperList = document.createElement('span');
+                paperList.className = 'side-item-list';
+                paperList.innerText = title;
+                paperOptions.appendChild(paperList);
+              }
+            });
+          });
+          const paperOptions = document.querySelectorAll('.side-item-list');
+          paperOptions.forEach(paperOption => {
+            paperOption.addEventListener('click', function() {
+              const title = this.innerText;
+              setPaperDetails(paperData, title);
+            });
+          });
+        }
+
+        // HTML 요소에 값을 넣어주고 PDF 뷰어를 띄우는 함수
+        function setPaperDetails(paperData, title) {
+          const paper = paperData.find(paper => paper.title === title);
+
+          // paper-container3에 date 정보 추가
+          const paperContainer3 = document.querySelector('.paper-date');
+          paperContainer3.innerHTML = dateString(paper.date);
+
+          // paper-text18에 writer 정보 추가
+          const paperText18 = document.querySelector('.paper-text18');
+          paperText18.innerHTML = paper.writer;
+
+          // paper-company에 title 정보 추가
+          const paperCompany = document.querySelector('.paper-title');
+          paperCompany.innerHTML = paper.title;
+          
+          
+          // 기존에 추가되어 있던 PDF 요소들 삭제          
+          const paperDescription = document.querySelector('.paper-description');
+          while (paperDescription.firstChild) {
+            paperDescription.removeChild(paperDescription.firstChild);
+          }
+
+          // paper-description에 pdf 파일 정보 추가
+          const pdfURL = paper.rawurl;
+          const pdfFrame = document.createElement('div');
+          pdfFrame.classList = 'pdfFrame';
+          pdfFrame.innerHTML = `<iframe id="pdfViewer" src="${pdfURL}" width="100%" height="920px"></iframe>`;
+          paperDescription.appendChild(pdfFrame);
+          
+          const pptURL = paper.preurl;
+          const pptFrame = document.createElement('div');
+          pptFrame.classList = 'pptFrame';
+          pptFrame.innerHTML = `<iframe id="pdfViewer"src="${pptURL}" width="100%" height="920px"></iframe>`;
+          paperDescription.appendChild(pptFrame);
+        }
+
+        function dateString(dates){
+          const dateStr = dates;
+          const date = new Date(dateStr);
+          const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          };
+          const formattedDate = date.toLocaleDateString('en-US', options);
+          const updatedText = `Last updated on ${formattedDate}`;
+          return updatedText;
+        }
+        
+        function resizePDF(){
+          const pdfViewer = document.querySelector('iframe#pdfViewer');
+          const minWidth = 200;
+          const minHeight = 200;
+          const maxWidth = window.innerWidth - pdfViewer.offsetLeft - 50;
+          const maxHeight = window.innerHeight - pdfViewer.offsetTop - 50;
+
+          let isResizing = false; // 마우스 클릭 여부
+
+          pdfViewer.addEventListener('mousedown', function(event) {
+            isResizing = true; // 마우스 클릭하면 크기 조절 시작
+          });
+
+          pdfViewer.addEventListener('mousemove', function(event) {
+            if (isResizing) {
+              let newWidth = event.clientX - pdfViewer.offsetLeft;
+              let newHeight = event.clientY - pdfViewer.offsetTop;
+
+              if (newWidth < minWidth) {
+                newWidth = minWidth;
+              } else if (newWidth > maxWidth) {
+                newWidth = maxWidth;
+              }
+
+              if (newHeight < minHeight) {
+                newHeight = minHeight;
+              } else if (newHeight > maxHeight) {
+                newHeight = maxHeight;
+              }
+
+              pdfViewer.style.width = newWidth + 'px';
+              pdfViewer.style.height = newHeight + 'px';
+            }
+          });
+
+          pdfViewer.addEventListener('mouseup', function(event) {
+            isResizing = false; // 마우스 클릭 해제하면 크기 조절 종료
+          });
+        }
+        
+        loadPaperJSON(createPaperOptions);
+        loadPaperJSON(setPaperDetails); // PaperOptions을 먼저 생성하고 -> 버튼을 누르면 pdf 새로 생성시키도록
+        resizePDF();
+    </script>
+  </head>
+  <body>
+    <div class="warpper">
+      <link href="./style/paper.css" rel="stylesheet" />
+
+      <div class="paper-container">
+        <div class="paper-navbar">
+          <header data-thq="thq-navbar" class="paper-navbar-interactive">
+            <div class="paper-branding">
+              <img
+                alt="image"
+                src="public/playground_assets/logo.svg"
+                class="paper-logo"
+              />
+              <span class="paper-company">DPRG</span>
+            </div>
+            <div class="paper-items">
+              <div class="paper-links">
+                <a href="index.html" class="paper-navlink nav-link">Home</a>
+                <span class="nav-link nav-selected">Papers</span>
+                <a href="member.html" class="paper-navlink1 nav-link">Member</a>
+              </div>
+              <button class="paper-button start-button button">
+                <span class="paper-text01">Start a project</span>
+              </button>
+            </div>
+            <div data-thq="thq-mobile-menu" class="paper-mobile-menu">
+              <div
+                data-thq="thq-mobile-menu-nav"
+                data-role="Nav"
+                class="paper-nav"
+              >
+                <div class="paper-top">
+                  <div class="paper-branding1">
+                    <img
+                      alt="image"
+                      src="public/playground_assets/logo.svg"
+                      class="paper-logo1"
+                    />
+                    <span class="paper-company1">DPRG</span>
+                  </div>
+                  <div data-thq="thq-close-menu" class="paper-menu-close">
+                    <svg viewBox="0 0 1024 1024" class="paper-icon">
+                      <path
+                        d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="paper-items1">
+                  <div class="paper-links1">
+                    <span class="nav-link">Work</span>
+                    <span class="nav-link">Services</span>
+                    <span class="nav-link">About</span>
+                    <span class="nav-link">Contact</span>
+                  </div>
+                  <button class="start-button button paper-button1">
+                    <span class="paper-text06">Start a project</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
+        </div>
+        <div class="paper-container1">
+          <div class="paper-container2">
+            <div class="paper-sidebar">
+              <div class="paper-nav-item side-item">
+                <span class="side-item-header side-item-selected">Computer Vision</span>
+                <div class="paper-options">
+                </div>
+              </div>
+              <div class="side-item">
+                <span class="side-item-header">Machine Learning</span>
+                <div class="paper-options">
+                </div>
+              </div>
+              <div class="paper-nav-item2 side-item">
+                <span class="side-item-header">Object Detection</span>
+                <div class="paper-options">
+                </div>
+              </div>
+            </div>
+            <div class="paper-about">
+              <div class="paper-header">
+                <div class="paper-author">
+                  <div class="paper-container3">
+                    <span class="paper-date">
+                      We started from 2023/03/31!
+                    </span>
+                  </div>
+                  <div class="paper-details">
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1679957537204-6723a5afe5dc?ixid=Mnw5MTMyMXwwfDF8YWxsfDQ4fHx8fHx8Mnx8MTY4MDAxOTM2Ng&amp;ixlib=rb-4.0.3&amp;w=200"
+                      class="paper-avatar"
+                    />
+                    <span class="paper-text18">name</span>
+                    <span class="paper-text19">@rldhkstopic</span>
+                  </div>
+                </div>
+                <h2 class="paper-title">TITLE</h2>
+                <span class="paper-description">
+                  <span class="paper-text20">
+                    1. 논문 리뷰는 인공지능과 컴퓨터 비전 분야에서 가장 혁신적인 아이디어와 최신 기술을 탐구하고 분석하는 공간입니다.
+                    <br><br>
+                    2. 논문 리뷰를 통해 인공지능과 컴퓨터 비전 분야에서 가장 핫한 주제를 파악하며, 전문적인 지식을 확보하고자 합니다.
+                    <br><br>
+                    3. 논문 리뷰를 통해 인공지능 및 컴퓨터 비전 알고리즘과 기술들을 다루며, 적용 가능성에 대해 탐구하고 평가합니다.
+                    <br><br>
+                    4. 우리의 목표는 인공지능과 컴퓨터 비전 분야에서의 지식과 경험을 넓혀, 전문가로서의 경쟁력을 강화하는 것입니다.
+                    <br><br>
+                    5. 논문 리뷰를 통해 새로운 알고리즘 및 기술을 학습하고, 기존의 문제점을 해결할 수 있는 새로운 방법을 탐색합니다.
+                    <br><br>
+                    6. 논문 리뷰를 통해 세부적인 기술 개념을 이해하고, 현실 세계의 문제들을 해결할 수 있는지에 대해 이해합니다.
+                    <br><br>
+                    7. 논문 리뷰는 인공지능과 컴퓨터 비전 분야에서의 최신 동향 및 발전 방향을 파악하는 데 중요한 역할을 합니다.
+                    <br><br>
+                    8. 논문 리뷰를 통해 인공지능과 컴퓨터 비전 분야의 지식을 습득하고, 창의적인 아이디어를 발전시키고자 합니다.
+                    <br><br>
+                    9. 논문 리뷰는 지식과 정보를 교류하고, 전문가들 간의 네트워크 형성을 위한 중요한 자리입니다.
+                    <br><br>
+                    10 논문 리뷰는 우리가 인공지능과 컴퓨터 비전 분야에서 전문성을 강화하는 데 큰 역할을 할 것입니다.
+                    <br><br>
+                  </span>
+                  <br class="paper-text21" />
+                  <br class="paper-text22" />
+                  <span class="paper-text23">
+                    로봇 공학: 로봇은 다양한 작업을 수행할 수 있으며, RTOS와 AI의 결합은 로봇이 실시간으로 환경에 적응하고 동작을
+                    수행하는 데 도움이 됩니다.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      data-section-id="navbar"
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+[
+  {
+    "title":"",
+    "date": "",
+    "field":"",
+    "writer":"",
+    "rawurl":"",
+    "preurl":""
+  },  
+  {
+    "title": "3D Object Detection for Autonomous Driving: A Review and New Outlooks",
+    "date": "2023-03-29",
+    "field": "Computer Vision",
+    "writer": "kiwan",
+    "rawurl": "./papers/raw_3ds.pdf",
+    "preurl": "./papers/pre_3ds.pdf"
+  },
+  {
+    "title": "paper title 2",
+    "date": "2023-03-01",
+    "field": "object detection",
+    "writer": "jane",
+    "rawurl": "./papers/raw_3ds.pdf",
+    "preurl": "./papers/pre_3ds.pdf"
+  },
+  {
+    "title": "paper title 3",
+    "date": "2023-04-20",
+    "field": "machine learning",
+    "writer": "john",
+    "rawurl": "./papers/raw_3ds.pdf",
+    "preurl": "./papers/pre_3ds.pdf"
+  },
+  {
+    "title": "paper title 4",
+    "date": "2023-05-10",
+    "field": "Computer Vision",
+    "writer": "bob",
+    "rawurl": "./papers/raw_3ds.pdf",
+    "preurl": "./papers/pre_3ds.pdf"
+  }
+]

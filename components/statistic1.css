@@ -1,0 +1,57 @@
+.statistic1-statistic {
+  gap: var(--dl-space-space-threeunits);
+  width: 346px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  border-color: #ffffff;
+  flex-direction: column;
+  padding-bottom: var(--dl-space-space-fiveunits);
+  border-bottom-width: 1px;
+}
+.statistic1-sta {
+  color: rgb(153, 153, 153);
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 3%;
+  text-transform: uppercase;
+}
+.statistic1-sta1 {
+  color: rgb(255, 255, 255);
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 72px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width: 991px) {
+  .statistic1-statistic {
+    gap: var(--dl-space-space-unit);
+    padding-bottom: var(--dl-space-space-oneandhalfunits);
+  }
+  .statistic1-sta {
+    font-size: 11px;
+    line-height: 16.5px;
+  }
+  .statistic1-sta1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+}
