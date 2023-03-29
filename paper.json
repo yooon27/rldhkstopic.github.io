@@ -13,7 +13,7 @@
     "field": "Computer Vision",
     "writer": "kiwan",
     "rawurl": "./papers/raw_3ds.pdf",
-    "preurl": "./papers/pre_3ds.pdf"
+    "preurl": "./ppts/example.pdf"
   },
   {
     "title": "IMAGENET-TRAINED CNNS ARE BIASED TOWARDS TEXTURE; INCREASING SHAPE BIAS IMPROVES ACCURACY AND ROBUSTNESS",
@@ -21,7 +21,7 @@
     "field": "Computer Vision",
     "writer": "Minchang",
     "rawurl": "./papers/566_imagenet_trained_cnns_are_bias.pdf",
-    "preurl": "./papers/pre_3ds.pdf"
+    "preurl": "./ppts/DPRG_ImageNet_Trained_CNNs_Are_Bias.pdf"
   },
   {
     "title": "Attention Is All You Need",
@@ -29,7 +29,7 @@
     "field": "Natural Language Processing",
     "writer": "Sanghyun",
     "rawurl": "./papers/Attention Is All You Need.pdf",
-    "preurl": "./papers/pre_3ds.pdf"
+    "preurl": "./ppts/example.pdf"
   },
   {
     "title": "paper title 4",
@@ -37,6 +37,6 @@
     "field": "Object detection",
     "writer": "Yoonsung",
     "rawurl": "./papers/Object Detection in 20 Years_A Survey.pdf",
-    "preurl": "./papers/pre_3ds.pdf"
+    "preurl": "./ppts/example.pdf"
   }
 ]
