@@ -143,6 +143,7 @@ span.side-item-header:before {
     content: "> ";
     padding-right: 5px;
     margin-left: -5px;
+    display: contents;
 }
 
 

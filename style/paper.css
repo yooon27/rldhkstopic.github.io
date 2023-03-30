@@ -211,11 +211,6 @@ span.side-item-header:hover {
   flex-direction: column;
   border-left: 1px solid #777;
 }
-.paper-nav-item2 {
-  display: flex;
-  margin-bottom: var(--dl-space-space-unit);
-  flex-direction: column;
-}
 .paper-text14 {
   font-weight: 600;
   margin-bottom: var(--dl-space-space-unit);

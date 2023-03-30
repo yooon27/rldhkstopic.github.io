@@ -1,22 +1,14 @@
 [
   {
-    "title":"",
-    "date": "",
-    "field":"",
-    "writer":"",
-    "rawurl":"",
-    "preurl":""
-  },  
-  {
-    "title": "3D Object Detection for Autonomous Driving: A Review and New Outlooks",
+    "title": "PointNet",
     "date": "2023-04-02",
-    "field": "Computer Vision",
+    "field": "3D Object detection",
     "writer": "kiwan",
     "rawurl": "./papers/raw_3ds.pdf",
     "preurl": "./ppts/example.pdf"
   },
   {
-    "title": "IMAGENET-TRAINED CNNS ARE BIASED TOWARDS TEXTURE; INCREASING SHAPE BIAS IMPROVES ACCURACY AND ROBUSTNESS",
+    "title": "ImageNet",
     "date": "2023-04-02",
     "field": "Computer Vision",
     "writer": "Minchang",
@@ -38,5 +30,13 @@
     "writer": "Yoonsung",
     "rawurl": "./papers/Object Detection in 20 Years_A Survey.pdf",
     "preurl": "./ppts/example.pdf"
+  },
+  {
+    "title":"",
+    "date": "",
+    "field":"",
+    "writer":"",
+    "rawurl":"",
+    "preurl":""
   }
 ]

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PDefault Paper Review Groups</title>
+    <title>Default Paper Review Groups</title>
     <meta property="og:title" content="Default Paper Review Groups" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -49,8 +49,38 @@
             .catch(error => console.error(error));
         }
         
+        function createSideItems(paperData){
+          const sideBar = document.querySelector('.paper-sidebar');
+          const fields = [...new Set(paperData.map(paper => paper.field))];
+          fields.forEach(field => {
+            const sideItem = document.createElement('div');
+            sideItem.classList = 'side-item';
+
+            const sideItemHeader = document.createElement('span');
+            sideItemHeader.className = 'side-item-header paper-nav-item';
+            sideItemHeader.innerText = field.toUpperCase();
+
+            const sidePaperOption = document.createElement('div');
+            sidePaperOption.className = 'paper-options';
+
+            sidePaperOption.addEventListener('click', function(){
+              this.classList.add('side-item-selected');
+              // 부모 요소를 찾아서 형제 요소들을 탐색
+              const siblings = Array.from(this.parentElement.parentElement.children);
+              siblings.forEach(sibling => {
+                if (sibling !== this.parentElement) {
+                  sibling.querySelector('.paper-options').classList.remove('side-item-selected');
+                }
+              });
+            });           
+            
+            sideItem.appendChild(sideItemHeader);
+            sideItem.appendChild(sidePaperOption);
+            sideBar.appendChild(sideItem);
+          });
+        }
+
         function createPaperOptions(paperData) {
-          // const paperOptions = document.querySelector('.paper-options');
           const headers = document.querySelectorAll('.side-item-header');
           
           // 필드명이 일치하는 데이터를 찾아 HTML 요소를 생성
@@ -71,6 +101,7 @@
           paperOptions.forEach(paperOption => {
             paperOption.addEventListener('click', function() {
               const title = this.innerText;
+
               setPaperDetails(paperData, title);
             });
           });
@@ -166,6 +197,7 @@
           });
         }
         
+        loadPaperJSON(createSideItems);
         loadPaperJSON(createPaperOptions);
         loadPaperJSON(setPaperDetails); // PaperOptions을 먼저 생성하고 -> 버튼을 누르면 pdf 새로 생성시키도록
         resizePDF();
@@ -237,7 +269,7 @@
         <div class="paper-container1">
           <div class="paper-container2">
             <div class="paper-sidebar">
-              <div class="paper-nav-item side-item">
+              <!-- <div class="paper-nav-item side-item">
                 <span class="side-item-header side-item-selected">Computer Vision</span>
                 <div class="paper-options">
                 </div>
@@ -256,7 +288,7 @@
                 <span class="side-item-header">Object Detection</span>
                 <div class="paper-options">
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="paper-about">
               <div class="paper-header">
